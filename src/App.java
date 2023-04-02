@@ -1,58 +1,33 @@
 import java.util.Scanner;
 
 public class App {
-    public static void main(String[] args) throws Exception {
-        Subject calculus = new Subject();
-        calculus.name = "Cálculo";
-        calculus.numberOfMasterclasses = 131;
-        calculus.numberOfSolvedExercises = 9000;
-        calculus.numberOfSolvedBookExercises = 40000;
+  public static void main(String[] args) throws Exception {
+    String calculusName = "Cálculo";
+    String physicsName = "Física";
 
-        Topic calculusTopic1 = new Topic();
-        calculusTopic1.name = "Derivadas";
-        calculusTopic1.description = "A derivada é a taxa de variação de uma função!";
+    Subject calculus = new Subject(calculusName, 131, 9000, 40000);
 
-        Topic calculusTopic2 = new Topic();
-        calculusTopic2.name = "Integrais";
-        calculusTopic2.description = "Eu sei que o nome é diferente, mas a integral basicamente representa o valor de uma área.";
+    Subject physics = new Subject(physicsName, 97, 9000, 19000);
+    
+    calculus.showDetails();
+    physics.showDetails();
 
-        calculus.topic.add(calculusTopic1);
-        calculus.topic.add(calculusTopic2);
+    try (Scanner subjectInput = new Scanner(System.in)) {
+      System.out.println("Deseja ver mais conteúdos de Cálculo ou de Física?");
+      String chosenSubject = subjectInput.nextLine();
 
-
-        Subject physics = new Subject();
-        physics.name = "Física";
-        physics.numberOfMasterclasses = 97;
-        physics.numberOfSolvedExercises = 9000;
-        physics.numberOfSolvedBookExercises = 19000;
-
-        Topic physicsTopic1 = new Topic();
-        physicsTopic1.name = "Leis de Newton";
-        physicsTopic1.description = "As três Leis de Newton são capazes de descrever o movimento dos objetos.";
-
-        Topic physicsTopic2 = new Topic();
-        physicsTopic2.name = "Grandezas Físicas";
-        physicsTopic2.description = "Definimos como grandezas físicas os valores que utilizamos para medir e quantificar os fenômenos que estudamos na Física.";
-
-        physics.topic.add(physicsTopic1);
-        physics.topic.add(physicsTopic2);
-
-        calculus.showDetails();
-        physics.showDetails();
-
-        try (Scanner subjectInput = new Scanner(System.in)) {
-            System.out.println("\nDeseja ver mais conteúdos de Cálculo ou de Física?");
-            String chosenSubject = subjectInput.nextLine();
-
-            if(chosenSubject.equals("Física")) {
-                physics.showTopics(chosenSubject);
-            }
-            if(chosenSubject.equals("Cálculo")) {
-                calculus.showTopics(chosenSubject);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+      if (!chosenSubject.equals(physicsName) && !chosenSubject.equals(calculusName)) {
+        System.out.println("\nMatéria inválida");
+        return;
+      }
+      if(chosenSubject.equals(physicsName)) {
+        physics.showTopics(chosenSubject);
+      }
+      if(chosenSubject.equals(calculusName)) {
+        calculus.showTopics(chosenSubject);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
     }
+  }
 }
